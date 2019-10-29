@@ -6,7 +6,16 @@
 
 {% block body %}
 
+    {{ form(form) }}
     <h1>Bienvenue sur la page Météo</h1>
-
+    <pre>
+        {{ dump(meteo) }}
+    </pre>
+    <h3>Toulouse:</h3>
+    <p>Météo en ce moment: {{meteo.currently.summary}}</p>
+    <p>Il fait actuellement {{meteo.currently.temperature}}°C.</p>
+    <p>Météo à venir: 
+        {{ meteo.daily.summary }}
+    </p>
 
 {% endblock %}
