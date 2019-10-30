@@ -13,7 +13,6 @@ class CityType extends AbstractType
     {
         $builder
             ->add('select_city')
-            ->add('Ok !', SubmitType::class)
         ;
     }
 
