@@ -6,10 +6,10 @@
 
 {% block body %}
 
-    <form action="{{ path('weather') }}" method="post" class="col-md-6">
+    <form action="{{ path('weather') }}" method="post" class="col-md-6 form-city">
             <div class="form-group">
                 <input name="ville" id="ville" class="city-select" type="text" placeholder="Ville">
-                <button type="submit" class="btn col-md-3 btn-outline-info validate-btn">Valider</button>
+                <button type="submit" class="btn col-md-3 validate-btn">Valider</button>
             </div>
     </form>
 

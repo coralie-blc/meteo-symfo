@@ -1,3 +1,6 @@
+
+
+
 $("#ville").autocomplete({
     source: function (request, response) {
         $.ajax({
@@ -21,15 +24,25 @@ $("#ville").autocomplete({
     },
 });
 
-var proxy = 'https://cors-anywhere.herokuapp.com/';
+
+//$('.city-select').val()
+// var proxy = 'https://cors-anywhere.herokuapp.com/';
 selectCity();
-function selectCity() {
+
+
+
+function selectCity(e) {
+    e.preventDefault();
+    $formulaire = $('.form-city');
+    $city = $('.city-select').val();
+    console.log($city);
     $.ajax( {
-        url : proxy + 'https://api-adresse.data.gouv.fr/search/?q='+ $('.city-select').val() , 
+        url : 'https://api-adresse.data.gouv.fr/search/?q=toulouse', 
+        method: 'GET',
         dataType : 'json',     
         }
     ).done(function(response){
-        JSON.parse(response);
-        return response;
+        // JSON.parse(response);
+        console.log(response);
     });
 }
