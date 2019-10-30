@@ -1,36 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Hello WeatherController!
+    Météo !
 {% endblock %}
 
 {% block body %}
-{% if meteoo is defined %}
-<p>TEMPLATE !!!!</p>
-<pre>
-    {{ dump() }}
-</pre>
-{# <p>Aujourd'hui à {{city}}</p> #}
-<p>{{ meteoo.daily.summary }}</p>
-<p>{{ meteoo.currently.icon }}</p>
-
-
-
-{% if meteoo is defined %}
-
-<div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded justify-content-around">
+    {% if cityMeteo is defined %}
+    <h3 class="text-center">Météo à {{city}}</h3>
+    <div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded justify-content-around">
         <div>
-            <p>Météo en cours: </p>
-            <p>{{ meteoo.currently.temperature }} °C. </p>
-            <p>{{ meteoo.currently.summary }}</p>
-            <p>{{ meteoo.currently.windSpeed }}</p>
-            <p>{{ meteoo.currently.uvIndex }}</p>
-        </div>
+            <p>En ce moment: </p>
+            <p>
+                <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                {{ cityMeteo.currently.temperature|round }} °C. 
+            </p>
+            <p>{{ cityMeteo.currently.summary }}</p>
+            <p>{{ cityMeteo.currently.windSpeed }}</p>
+            <p>L'indice UV est de: {{ cityMeteo.currently.uvIndex|round }} -> {% if cityMeteo.currently.uvIndex < 3 %}vous n'avez pas besoin de crème solaire!{% endif %}
+            </div>
         <div>
             <p>Aujourd'hui à {{city}}</p>
-            <p>{{ meteoo.daily.summary }}</p>
+            <p>{{ cityMeteo.daily.summary }}</p>
+            <p>{{ cityMeteo.currently.icon }}</p>
+        </div>
+        <div>
+
         </div>
     </div>
     {% endif %}
-{% endif %}
 {% endblock %}

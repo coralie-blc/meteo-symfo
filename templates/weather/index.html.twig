@@ -1,68 +1,51 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Hello WeatherController!
+    Météo !
 {% endblock %}
 
 {% block body %}
 
-    <form action="{{ path('meteo') }}" class="col-md-6 form-city", method="post">
+    <div class="d-flex m-5">
+        <form action="{{ path('meteo') }}" class="col-md-6 form-city", method="post">
             <div class="form-group">
                 <input name="ville" id="ville" class="city-select" type="text" placeholder="Ville">
+                <p>Si la ville sélectionnée ne possède pas de station météo, la plus proche sera sélectionnée.</p>
                 <input type="hidden" class="latitude" name='latitude' />
                 <input type="hidden" class="longitude" name='longitude' />
                 <input type="hidden" class="cityname" name='city-name' />
-                {# <input type="hidden" name="token" value="{{ csrf_token('cityform') }}"> #}
                 <button type="submit" class="btn col-md-3 validate-btn">Valider</button>
             </div>
-    </form>
-
-    {# <pre>
-        {{ dump() }}
-    </pre> #}
-
-{% include "weather/new.html.twig" %}
-
-{% if meteo is defined %}
-
-<div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded justify-content-around">
-        <div>
-            <p>Météo en cours: </p>
-            <p>{{ meteo.currently.temperature }} °C. </p>
-            <p>{{ meteo.currently.summary }}</p>
-            <p>{{ meteo.currently.windSpeed }}</p>
-            <p>{{ meteo.currently.uvIndex }}</p>
-        </div>
-        <div>
-            <p>Aujourd'hui à {{city}}</p>
-            <p>{{ meteo.daily.summary }}</p>
-            <p>{{ meteo.currently.icon }}</p>
-        </div>
+        </form>
     </div>
-    {% endif %}
-{# 
-    <h1>Bienvenue sur la page Météo</h1>
-    <pre>
-        {{ dump(meteo) }}
-    </pre>
 
-    <div class="meteo-card d-flex justify-content-center">
-        <section class="w-50 shadow p-3 mb-5 bg-white rounded">
-            <h3>Toulouse:</h3>
-            <p>Météo en ce moment: {{meteo.currently.summary}}</p>
-            <p>Il fait actuellement {{meteo.currently.temperature}}°C.</p>
-            <p>Vent : {{meteo.currently.windSpeed}}</p>
-            
-            
-            {% if meteo.currently.uvIndex < 3 %}
-            <p>Pas besoin de crème solaire car l'indice uv est de {{meteo.currently.uvIndex}} !</p>
-            {% else %}
-            <p>Prévoyez la crème solaire, l'indice UV est de {{meteo.currently.uvIndex}} !</p>
-            {% endif %}
-            
-            <p>Météo à venir: 
-                {{ meteo.daily.summary }}
-            </p>
-        </section>
-    </div> #} 
+
+    {% include "weather/new.html.twig" %}
+
+    {% if meteo is defined %}
+        <h3 class="text-center">Météo à {{city}}</h3>
+        <div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded justify-content-around">
+            <div>
+                <p>En ce moment: </p>
+                <p>
+                    <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                    {{ meteo.currently.temperature|round }} °C. </p>
+                <p>{{ meteo.currently.summary }}</p>
+                <p>Le vent souffle à: {{ meteo.currently.windSpeed }} km/h.</p>
+                <p>L'indice UV est de: {{ meteo.currently.uvIndex|round }} -> {% if meteo.currently.uvIndex < 3 %}vous n'avez pas besoin de crème solaire!{% endif %}
+                </p>
+            </div>
+            <div>
+                <p>Globalement, pour la journée:</p>
+                <p>{{ meteo.daily.summary }}</p>
+                {% if meteo.currently.icon == "cloudy" %} <canvas id="icon1" width="128" height="128"></canvas>
+                !!!{% endif %}
+                
+                <p>{{ meteo.currently.icon }}</p>
+            </div>
+        </div>
+        {% endif %}
+<pre>
+    {{ dump() }}
+</pre>
 {% endblock %}
