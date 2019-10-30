@@ -18,38 +18,64 @@ class WeatherController extends AbstractController
     }
 
     /**
-     * @Route("/city", name="select-city")
+     * @Route("/city", name="select-city", methods={"POST"})
      */
     public function citySelect(Request $request)
     {
-        if($request->getMethod() == 'POST') {
-            // Si c'est le cas, on récupére les données du formulaire
-            $city = $request->request->get('city');
-            // dump($city);exit;
-            // On redirige l'utilisateur vers la page de l'article
-            return $this->redirectToRoute('index');
-        }
+        $longitude = $request->request->get('longitude');
+        $latitude = $request->request->get('latitude');
 
+        return $this->redirectToRoute('weather') ;
     }
 
 
+    
     /**
-     * @Route("/weather", name="weather")
+     * @Route("/meteo", name="meteo", methods={"POST"})
      */
-    public function index(WeatherService $wheatherService)
+    public function meteo(Request $request, WeatherService $weatherService)
     {
-        $form = $this->createForm(CityType::class);
+        // dump($longitude);exit;
+        // $token = $request->request->get('token');
+        // dump($token);exit;
+        // if ($this->isCsrfTokenValid('cityform', $token)) {
+        $longitude = $request->request->get('longitude');
+        $latitude = $request->request->get('latitude');
+        $city = $request->request->get('city-name');
+        dump($city);
 
-        $url = 'https://api.darksky.net/forecast/78dada84a9acde5d1c922d09eb67744d/43.5689,1.39069?lang=fr&units=auto';
+        dump($longitude);
+        // dump($longitude);exit;
+        // $meteoo = file_get_contents('https://api.darksky.net/forecast/78dada84a9acde5d1c922d09eb67744d/43.5689,1.39069?lang=fr&units=auto');
 
-        $str = file_get_contents($url);
-        $meteo = json_decode($str, true);
-        // dump($json);exit;
+        // $jsonData = (json_decode($meteoo));
+        $meteoo = $weatherService->getWeather($longitude, $latitude);
+            // dump($meteoo);exit;
         return $this->render('weather/index.html.twig', array(
-            'form' => $form->createView(),
-            'meteo' => $meteo,
+            'meteoo' => $meteoo,
+            'city' => $city
         ));
+        // return $this->redirectToRoute('weather') ;
+
+        // }
+
     }
 
+
+     /**
+     * @Route("/", name="weather")
+     */
+    public function index(Request $request, WeatherService $weatherService)
+    {
+        // toulouse
+        $meteo = file_get_contents('https://api.darksky.net/forecast/78dada84a9acde5d1c922d09eb67744d/43.5689,1.39069?lang=fr&units=auto');
+
+        $jsonData = (json_decode($meteo));
+        return $this->render('weather/index.html.twig', array(
+            'meteo' => $jsonData,
+            'city' => 'Toulouse'
+        ));
+
+    }
 
 }

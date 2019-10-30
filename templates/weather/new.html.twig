@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Hello WeatherController!
+{% endblock %}
+
+{% block body %}
+{% if meteoo is defined %}
+<p>TEMPLATE !!!!</p>
+<pre>
+    {{ dump() }}
+</pre>
+{# <p>Aujourd'hui à {{city}}</p> #}
+<p>{{ meteoo.daily.summary }}</p>
+<p>{{ meteoo.currently.icon }}</p>
+
+
+
+{% if meteoo is defined %}
+
+<div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded justify-content-around">
+        <div>
+            <p>Météo en cours: </p>
+            <p>{{ meteoo.currently.temperature }} °C. </p>
+            <p>{{ meteoo.currently.summary }}</p>
+            <p>{{ meteoo.currently.windSpeed }}</p>
+            <p>{{ meteoo.currently.uvIndex }}</p>
+        </div>
+        <div>
+            <p>Aujourd'hui à {{city}}</p>
+            <p>{{ meteoo.daily.summary }}</p>
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

@@ -6,17 +6,41 @@
 
 {% block body %}
 
-    <form action="{{ path('weather') }}" method="post" class="col-md-6 form-city">
+    <form action="{{ path('meteo') }}" class="col-md-6 form-city", method="post">
             <div class="form-group">
                 <input name="ville" id="ville" class="city-select" type="text" placeholder="Ville">
+                <input type="hidden" class="latitude" name='latitude' />
+                <input type="hidden" class="longitude" name='longitude' />
+                <input type="hidden" class="cityname" name='city-name' />
+                {# <input type="hidden" name="token" value="{{ csrf_token('cityform') }}"> #}
                 <button type="submit" class="btn col-md-3 validate-btn">Valider</button>
             </div>
     </form>
 
+    {# <pre>
+        {{ dump() }}
+    </pre> #}
 
+{% include "weather/new.html.twig" %}
 
+{% if meteo is defined %}
 
-
+<div class="d-flex justify-content-center shadow p-3 mb-5 bg-white rounded justify-content-around">
+        <div>
+            <p>Météo en cours: </p>
+            <p>{{ meteo.currently.temperature }} °C. </p>
+            <p>{{ meteo.currently.summary }}</p>
+            <p>{{ meteo.currently.windSpeed }}</p>
+            <p>{{ meteo.currently.uvIndex }}</p>
+        </div>
+        <div>
+            <p>Aujourd'hui à {{city}}</p>
+            <p>{{ meteo.daily.summary }}</p>
+            <p>{{ meteo.currently.icon }}</p>
+        </div>
+    </div>
+    {% endif %}
+{# 
     <h1>Bienvenue sur la page Météo</h1>
     <pre>
         {{ dump(meteo) }}
@@ -40,5 +64,5 @@
                 {{ meteo.daily.summary }}
             </p>
         </section>
-    </div>
+    </div> #} 
 {% endblock %}
