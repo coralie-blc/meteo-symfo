@@ -40,4 +40,28 @@ class WeatherService
         return $jsonData; 
     }
 
+
+    /**
+     * @return array
+     */
+    public function getToulouseWeather($longitude, $latitude)
+    {
+        header('Content-Type: application/json'); 
+
+        // $city = '43.5689,1.39069';
+        // $response = $this->client->request('GET', 'https://api.darksky.net/forecast/' . $this->apiKey . '/' . $latitude . $longitude .'?lang=fr&units=auto');
+
+        // $url = file_get_contents('https://api.darksky.net/forecast/78dada84a9acde5d1c922d09eb67744d/43.5689,1.39069?lang=fr&units=auto');
+        $url = file_get_contents('https://api.darksky.net/forecast/' . $this->apiKey . '/' . $latitude . ',' . $longitude .'?lang=fr&units=auto');
+
+        
+        $jsonData = (json_decode($url)); 
+        // dump($jsonData);
+
+
+
+        return $jsonData; 
+    }
+
+
 }

@@ -1,3 +1,16 @@
-/* .meteo-card {
-    background-color: rgb(243, 242, 242);
-} */
+.body {
+    font-family: 'Jomolhari', serif;
+}
+
+.subtitle {
+    text-decoration: underline;
+}
+
+.credit {
+    margin-top: 5em;
+}
+.credit a {
+    text-decoration: none;
+    color: black;
+}
+

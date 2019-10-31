@@ -21,23 +21,28 @@ class WeatherController extends AbstractController
 
     
     /**
-     * @Route("/meteo", name="meteo", methods={"POST"})
+     * @Route("/", name="meteo", methods={"POST"})
      */
     public function meteo(Request $request, WeatherService $weatherService)
     {
         $longitude = $request->request->get('longitude');
         $latitude = $request->request->get('latitude');
         $city = $request->request->get('city-name');
-        dump($city);
-
-        dump($longitude);
 
         $cityMeteo = $weatherService->getWeather($longitude, $latitude);
+
+
+        $latitudeTls = 43.5689; 
+        $longitudeTls = 1.39069;
+        $meteoToulouse = $weatherService->getToulouseWeather($longitudeTls, $latitudeTls);
+
             // dump($meteoo);exit;
-        return $this->render('weather/index.html.twig', array(
+        return $this->render('weather/index.html.twig', [
             'cityMeteo' => $cityMeteo,
-            'city' => $city
-        ));
+            'city' => $city,
+            'meteo' => $meteoToulouse,
+            'ville' => 'Toulouse'
+        ]);
 
 
     }
@@ -49,13 +54,14 @@ class WeatherController extends AbstractController
     public function index(Request $request, WeatherService $weatherService)
     {
         // toulouse
-        $meteo = file_get_contents('https://api.darksky.net/forecast/78dada84a9acde5d1c922d09eb67744d/43.5689,1.39069?lang=fr&units=auto');
+        $latitudeTls = 43.5689; 
+        $longitudeTls = 1.39069;
+        $meteoToulouse = $weatherService->getToulouseWeather($longitudeTls, $latitudeTls);
 
-        $jsonData = (json_decode($meteo));
-        return $this->render('weather/index.html.twig', array(
-            'meteo' => $jsonData,
-            'city' => 'Toulouse'
-        ));
+        return $this->render('weather/index.html.twig', [
+            'meteo' => $meteoToulouse,
+            'ville' => 'Toulouse'
+        ]);
 
     }
 
