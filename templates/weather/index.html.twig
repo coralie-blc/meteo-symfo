@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-<div class="container container-fluid ">
-    <div class="form d-flex m-5 w-80 justify-content-center col-md-12">
+<div class="container container-fluid">
+    <div class="form d-flex m-5 w-80 justify-content-center">
         {# Méthode get pour pouvoir avoir une url partageable / Pas de soucis de sécurité ici, sinon j'aurai utilisé POST #}
         <form action="{{ path('meteo') }}" class="col-md-6 form-city", method="get">
             <div class="form-group d-flex w-80">
@@ -20,11 +20,11 @@
         </form>
     </div>
 
-<section class="d-flex">
+<section class="d-flex row">
     {# Météo Toulouse : toujours affichée. #}
     {% if meteo is defined %}
-        <div class="d-flex shadow p-3 m-3 w-50 bg-white rounded col-md-6 ">
-            <div class="d-flex flex-column">
+        <div class="d-flex shadow p-3 m-3 bg-white col-md-5">
+            <div class="d-flex flex-column ">
                 <h3 class="text-center">Météo à {{ville}}</h3>
                 <p class="h5 mt-2 subtitle">En ce moment: </p>
                 <p>
@@ -46,7 +46,7 @@
                 {#  Icone Météo #}
                 <div class="text-center">
                     {% if meteo.currently.icon == "cloudy" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/cloud.png">
+                        <img width="50" src="https://img.icons8.com/dusk/54/000000/cloud.png">
                     {% elseif meteo.currently.icon == "clear-day" %}
                         <img width="50" src="https://img.icons8.com/dusk/64/000000/sun.png">
                     {% elseif meteo.currently.icon == "clear-night" %}
@@ -75,7 +75,7 @@
 
     {# Affichage résultat ville saisie #}
     {% if cityMeteo is defined %}
-        <div class="d-flex shadow p-3 m-3 w-50 bg-white roundedy col-md-6">
+        <div class="d-flex shadow p-3 m-3 bg-white col-md-5">
             <div class="d-flex flex-column">
                 <h3 class="text-center">Météo à {{city}}</h3>
                 <p class="h5 mt-2 subtitle">En ce moment: </p>
