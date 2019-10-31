@@ -21,17 +21,22 @@ class WeatherController extends AbstractController
 
     
     /**
-     * @Route("/", name="meteo", methods={"POST"})
+     * @Route("/", name="meteo", methods={"GET"})
      */
     public function meteo(Request $request, WeatherService $weatherService)
     {
-        $longitude = $request->request->get('longitude');
-        $latitude = $request->request->get('latitude');
-        $city = $request->request->get('city-name');
+        // Récupération des données du formulaire avec request / input hidden 
+        // Données se remplissant automatiquement avec app.js
+        // J'ai fait le choix d'une méthode GET pour obtenir une url partageable.
+        // On parle ici de météo, pas de formulaire "sécurité" ou POST sera indispensable
+        $longitude = $request->query->get('longitude');
+        $latitude = $request->query->get('latitude');
+        $city = $request->query->get('city-name');
 
+        // appel au WeatherService et passage des données $longitude $latitude dynamiquement.
         $cityMeteo = $weatherService->getWeather($longitude, $latitude);
 
-
+        // Puisqu'on rappelle le même template (index.html.twig), je redonne les données concernant Toulouse
         $latitudeTls = 43.5689; 
         $longitudeTls = 1.39069;
         $meteoToulouse = $weatherService->getToulouseWeather($longitudeTls, $latitudeTls);
@@ -49,11 +54,11 @@ class WeatherController extends AbstractController
 
 
      /**
-     * @Route("/", name="weather")
+     * @Route("/", name="home")
      */
     public function index(Request $request, WeatherService $weatherService)
     {
-        // toulouse
+        // Données de Toulouse
         $latitudeTls = 43.5689; 
         $longitudeTls = 1.39069;
         $meteoToulouse = $weatherService->getToulouseWeather($longitudeTls, $latitudeTls);

@@ -1,8 +1,8 @@
-
+// Utilisation d'une API externe pour gérer l'autocomplétion + remplissage des input hidden du template grace à Ajax
 $("#ville").autocomplete({
     source: function (request, response) {
         $.ajax({
-            url: "https://api-adresse.data.gouv.fr/search/?city="+$("input[name='ville']").val(),
+            url: "https://api-adresse.data.gouv.fr/search/?q=" + $("input[name='ville']").val(),
             data: { q: request.term },
             dataType: "json",
             success: function (data) {
@@ -21,9 +21,10 @@ $("#ville").autocomplete({
                     // Ajout dans un tableau pour éviter doublons
                     if ($.inArray(item.properties.postcode, cities) == -1) {
                         cities.push(item.properties.postcode);
-                        return { label: item.properties.postcode + " - " + item.properties.city, 
-                                 postcode: item.properties.postcode,
-                                 value: item.properties.city
+                        return { 
+                            label: item.properties.postcode + " - " + item.properties.city, 
+                            postcode: item.properties.postcode,
+                            value: item.properties.city
                         };
                     }
                 }));
