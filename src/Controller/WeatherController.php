@@ -21,7 +21,7 @@ class WeatherController extends AbstractController
 
     
     /**
-     * @Route("/", name="meteo", methods={"GET"})
+     * @Route("/meteo", name="meteo", methods={"GET"})
      */
     public function meteo(Request $request, WeatherService $weatherService)
     {

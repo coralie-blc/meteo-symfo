@@ -1,0 +1,26 @@
+{# Icones prévisions météo à J+3 #}
+{% for nextdays in cityMeteo.daily.data|slice(0, 3) %}
+    <div>
+        {% if nextdays.icon == "cloudy" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/54/000000/cloud.png">
+        {% elseif nextdays.icon == "clear-day" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/64/000000/sun.png">
+        {% elseif nextdays.icon == "clear-night" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/64/000000/foggy-night-1.png">
+        {% elseif nextdays.icon == "rain" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/64/000000/rain.png">
+        {% elseif nextdays.icon == "snow" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/64/000000/snow.png">
+        {% elseif nextdays.icon == "sleet" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/officel/16/000000/sleet.png">
+        {% elseif nextdays.icon == "wind" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/64/000000/windy-weather.png">
+        {% elseif nextdays.icon == "fog" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/64/000000/fog-day.png">
+        {% elseif nextdays.icon == "partly-cloudy-day" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/50/000000/cloud.png">
+        {% elseif nextdays.icon == "partly-cloudy-night" %}
+            <img width="50" class="m-2" src="https://img.icons8.com/dusk/64/000000/partly-cloudy-night.png">
+        {% endif %}
+    </div>
+{% endfor %}

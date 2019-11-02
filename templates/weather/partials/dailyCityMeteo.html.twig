@@ -1,0 +1,23 @@
+{# Icones prévisions météo J-J #}
+
+{% if cityMeteo.currently.icon == "cloudy" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/cloud.png">
+{% elseif cityMeteo.currently.icon == "clear-day" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/sun.png">
+{% elseif cityMeteo.currently.icon == "clear-night" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/foggy-night-1.png">
+{% elseif cityMeteo.currently.icon == "rain" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/rain.png">
+{% elseif cityMeteo.currently.icon == "snow" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/snow.png">
+{% elseif cityMeteo.currently.icon == "sleet" %}
+    <img width="50" src="https://img.icons8.com/officel/16/000000/sleet.png">
+{% elseif cityMeteo.currently.icon == "wind" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/windy-weather.png">
+{% elseif cityMeteo.currently.icon == "fog" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/fog-day.png">
+{% elseif cityMeteo.currently.icon == "partly-cloudy-day" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/partly-cloudy-day.png">
+{% elseif cityMeteo.currently.icon == "partly-cloudy-night" %}
+    <img width="50" src="https://img.icons8.com/dusk/64/000000/partly-cloudy-night.png">
+{% endif %}

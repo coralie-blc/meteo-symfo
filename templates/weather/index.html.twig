@@ -1,3 +1,5 @@
+{# Choix d'utiliser des includes de partials pour faciliter la lecture du code #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}
@@ -5,123 +7,97 @@
 {% endblock %}
 
 {% block body %}
-<div class="container container-fluid">
-    <div class="form d-flex m-5 w-80 justify-content-center">
-        {# Méthode get pour pouvoir avoir une url partageable / Pas de soucis de sécurité ici, sinon j'aurai utilisé POST #}
-        <form action="{{ path('meteo') }}" class="col-md-6 form-city", method="get">
-            <div class="form-group d-flex w-80">
-                <input name="ville" id="ville" class="city-select" type="text" placeholder="Saisissez une ville*">
-                <input type="hidden" class="latitude" name='latitude' />
-                <input type="hidden" class="longitude" name='longitude' />
-                <input type="hidden" class="cityname" name='city-name' />
-                <button type="submit" class="btn col-md-3 validate-btn btn btn-info ml-2">Valider</button>
-            </div>
-            <p class="small">*Si absence de relevé dans celle-ci, la plus proche sera affichée.</p>
-        </form>
-    </div>
+    <div class="page container-fluid">
+        <div class="form d-flex justify-content-center">
+            {# Méthode get pour pouvoir avoir une url partageable / Pas de soucis de sécurité ici, sinon j'aurai utilisé POST #}
+            <form action="{{ path('meteo') }}" class="col-md-6 mt-3 form-city", method="get">
+                <div class="form-group d-flex justify-content-center">
+                    <input name="ville" id="ville" class="city-select" type="text" placeholder="Saisissez une ville*">
+                    <input type="hidden" class="latitude" name='latitude' />
+                    <input type="hidden" class="longitude" name='longitude' />
+                    <input type="hidden" class="cityname" name='city-name' />
+                    <button type="submit" class="btn col-md-3 validate-btn btn btn-info ml-2">Valider</button>
+                </div>
+                <p class="small font-weight-bold text-center text-perso">*Si absence de relevé dans celle-ci, la plus proche sera affichée.</p>
+            </form>
+        </div>
 
-<section class="d-flex row">
-    {# Météo Toulouse : toujours affichée. #}
-    {% if meteo is defined %}
-        <div class="d-flex shadow p-3 m-3 bg-white col-md-5">
-            <div class="d-flex flex-column ">
-                <h3 class="text-center">Météo à {{ville}}</h3>
-                <p class="h5 mt-2 subtitle">En ce moment: </p>
-                <p>
-                    <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
-                    {{ meteo.currently.temperature|round }} °C. 
-                </p>
-                <p>{{ meteo.currently.summary }}</p>
-                <p>Le vent souffle à: {{ meteo.currently.windSpeed|round }} km/h.</p>
-                <p>L'indice UV est de: {{ meteo.currently.uvIndex|round }} -> 
-                    {% if meteo.currently.uvIndex < 3 %}
-                        vous n'avez pas besoin de crème solaire! 
+
+        <section class="d-flex row justify-content-center">
+            {# Météo Toulouse : toujours affichée. #}
+            {% if meteo is defined %}
+                <div class="d-flex flex-column shadow-lg p-3 m-3 col-md-5 city-meteo">
+                    <h3 class="text-center">Météo à {{ville}}</h3>
+                    
+                    {#  Icone Daily Météo #}
+                    <div class="text-center mt-2">
+                        {% include "weather/partials/dailymeteo.html.twig" %}
+                    </div>
+
+                    <p class="h5 mt-2 subtitle">En ce moment: </p>
+                    <p>
+                        <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                        {{ meteo.currently.temperature|round }} °C. 
+                    </p>
+                    <p>{{ meteo.currently.summary }}</p>
+                    <p>Le vent souffle à: {{ meteo.currently.windSpeed|round }} km/h.</p>
+                    <p>L'indice UV est de {{ meteo.currently.uvIndex|round }}
+                        {% if meteo.currently.uvIndex < 3 %}
+                           , la crème solaire n'est pas utile ! 
+                        {% else %} 
+                           . Attention, au dessus de cet indice, il est préférable d'être vigilant.
+                        {% endif %}
+                    </p>
+                    <p class="h5 mt-2 subtitle">Dans les jours à venir:</p>
+                    <p>{{ meteo.daily.summary }}</p>
+
+                    {# Meteo à 3 jours #}
+                    <div class="d-flex justify-content-center">
+                        {% include "weather/partials/meteo3days.html.twig" %}
+                    </div>
+                </div>
+            {% endif %}
+
+
+
+            {# Affichage résultat ville saisie #}
+            {% if cityMeteo is defined %}
+                <div class="d-flex flex-column shadow-lg p-3 m-3 col-md-5 city-meteo">
+                    <h3 class="text-center">Météo à {{city}}</h3>
+
+                    {#  Icone Daily Météo #}
+                    <div class="text-center mt-2">
+                        {% include "weather/partials/dailyCityMeteo.html.twig" %}
+                    </div>
+
+                    <p class="h5 mt-2 subtitle">En ce moment: </p>
+                    <p>
+                        <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                        {{ cityMeteo.currently.temperature|round }} °C. 
+                    </p>
+                    <p>{{ meteo.daily.summary }}</p>
+                    <p>Le vent souffle à: {{ cityMeteo.currently.windSpeed|round }} km/h.</p>
+                    <p>L'indice UV est de {{ cityMeteo.currently.uvIndex|round }} 
+                    {% if cityMeteo.currently.uvIndex < 3 %}
+                        , la crème solaire n'est pas utile ! 
                     {% else %} 
-                        Attention, au dessus de cet indice, il est préférable d'être vigilant.
+                        . Attention, au dessus de cet indice, il est préférable d'être vigilant.
                     {% endif %}
-                </p>
-                <p class="h5 mt-2 subtitle">A venir:</p>
-                <p>{{ meteo.daily.summary }}</p>
+                    <p class="h5 mt-2 subtitle">Dans les jours à venir:</p>
+                    <p>{{ cityMeteo.daily.summary }}</p>
 
-                {#  Icone Météo #}
-                <div class="text-center">
-                    {% if meteo.currently.icon == "cloudy" %}
-                        <img width="50" src="https://img.icons8.com/dusk/54/000000/cloud.png">
-                    {% elseif meteo.currently.icon == "clear-day" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/sun.png">
-                    {% elseif meteo.currently.icon == "clear-night" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/foggy-night-1.png">
-                    {% elseif meteo.currently.icon == "rain" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/rain.png">
-                    {% elseif meteo.currently.icon == "snow" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/snow.png">
-                    {% elseif meteo.currently.icon == "sleet" %}
-                        <img width="50" src="https://img.icons8.com/officel/16/000000/sleet.png">
-                    {% elseif meteo.currently.icon == "wind" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/windy-weather.png">
-                    {% elseif meteo.currently.icon == "fog" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/fog-day.png">
-                    {% elseif meteo.currently.icon == "partly-cloudy-day" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/partly-cloudy-day.png">
-                    {% elseif meteo.currently.icon == "partly-cloudy-night" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/partly-cloudy-night.png">
-                    {% endif %}
+
+
+                    {# Meteo à 3 jours #}
+                    <div class="d-flex justify-content-center">
+                        {% include "weather/partials/cityMeteo3days.html.twig" %}
+                    </div>
                 </div>
-            </div>
-        </div>
-    {% endif %}
-
-
-
-    {# Affichage résultat ville saisie #}
-    {% if cityMeteo is defined %}
-        <div class="d-flex shadow p-3 m-3 bg-white col-md-5">
-            <div class="d-flex flex-column">
-                <h3 class="text-center">Météo à {{city}}</h3>
-                <p class="h5 mt-2 subtitle">En ce moment: </p>
-                <p>
-                    <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
-                    {{ cityMeteo.currently.temperature|round }} °C. 
-                </p>
-                <p>{{ meteo.daily.summary }}</p>
-                <p>Le vent souffle à: {{ cityMeteo.currently.windSpeed|round }} km/h.</p>
-                <p>L'indice UV est de: {{ cityMeteo.currently.uvIndex|round }} -> 
-                {% if cityMeteo.currently.uvIndex < 3 %}
-                    vous n'avez pas besoin de crème solaire! 
-                {% else %} 
-                    Attention, au dessus de cet indice, il est préférable d'être vigilant.
-                {% endif %}
-                <p class="h5 mt-2 subtitle">A venir:</p>
-                <p>{{ cityMeteo.daily.summary }}</p>
-
-                {#  Icone Météo #}
-                <div class="text-center">
-                    {% if cityMeteo.currently.icon == "cloudy" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/cloud.png">
-                    {% elseif cityMeteo.currently.icon == "clear-day" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/sun.png">
-                    {% elseif cityMeteo.currently.icon == "clear-night" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/foggy-night-1.png">
-                    {% elseif cityMeteo.currently.icon == "rain" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/rain.png">
-                    {% elseif cityMeteo.currently.icon == "snow" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/snow.png">
-                    {% elseif cityMeteo.currently.icon == "sleet" %}
-                        <img width="50" src="https://img.icons8.com/officel/16/000000/sleet.png">
-                    {% elseif cityMeteo.currently.icon == "wind" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/windy-weather.png">
-                    {% elseif cityMeteo.currently.icon == "fog" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/fog-day.png">
-                    {% elseif cityMeteo.currently.icon == "partly-cloudy-day" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/partly-cloudy-day.png">
-                    {% elseif cityMeteo.currently.icon == "partly-cloudy-night" %}
-                        <img width="50" src="https://img.icons8.com/dusk/64/000000/partly-cloudy-night.png">
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    {% endif %}
-</section>
-    <p class="small credit">Cette page utilise des icones provenants de <a href="https://icones8.fr">icon8</a>.</p>
-</div>
+            {% endif %}
+            
+        </section>
+        <p class="small credit font-weight-bold text-perso text-center">Cette page affiche des icones provenants de <a href="https://icones8.fr">icon8</a>.</p>
+        
+        {% include "footer.html.twig" %}
+    </div>
 {% endblock %}

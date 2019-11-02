@@ -1,5 +1,9 @@
-.body {
-    font-family: 'Jomolhari', serif;
+.page {
+    font-family: 'Jomolhari';
+    background-image: url(../img/ice.jpg);
+    background-repeat: cover;
+    height: 100vh;
+    
 }
 
 .subtitle {
@@ -18,3 +22,47 @@
     background-color: #f5fcfd;
     list-style: none;
 }
+
+.city-meteo {
+    border-radius: 20px;
+    background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+}
+
+.text-perso {
+    text-shadow: 1px 1px 3px #ddc0ff;
+}
+
+::placeholder {
+    text-align: center;
+}
+
+
+.footer {
+  margin-top: 8em;
+  background-color: black;
+  color: white;
+  justify-content: center;
+  height: 6em;
+  align-items: center;
+}
+
+
+
+
+/* Media Query */
+@media (max-width: 300px) {
+    body {
+      background-image: url(../img/ice.jpg);
+    }
+  }
+  @media (min-width: 301px) and (max-width: 600px) {
+    body {
+      background-image: url(../img/ice.jpg);
+    }
+  }
+  @media (min-width: 601px) and (max-width: 768px) {
+    body {
+      background-image: url(../img/ice.jpg);
+    }
+  }
+
