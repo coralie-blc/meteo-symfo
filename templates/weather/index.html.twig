@@ -1,5 +1,4 @@
 {# Choix d'utiliser des includes de partials pour faciliter la lecture du code #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}
@@ -15,7 +14,7 @@
                     <input name="ville" id="ville" class="city-select" type="text" placeholder="Saisissez une ville*">
                     <input type="hidden" class="latitude" name='latitude' />
                     <input type="hidden" class="longitude" name='longitude' />
-                    <input type="hidden" class="cityname" name='city-name' />
+                    <input type="hidden" class="cityname" name='city-name' id='city-name'/>
                     <button type="submit" class="btn col-md-3 validate-btn btn btn-info ml-2">Valider</button>
                 </div>
                 <p class="small font-weight-bold text-center text-perso">*Si absence de relevé dans celle-ci, la plus proche sera affichée.</p>

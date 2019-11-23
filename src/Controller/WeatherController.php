@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WeatherController extends AbstractController
 {
-    private $wheatherService;
 
     public function __construct(WeatherService $weather)
     {
@@ -39,7 +38,7 @@ class WeatherController extends AbstractController
         // Puisqu'on rappelle le même template (index.html.twig), je redonne les données concernant Toulouse
         $latitudeTls = 43.5689; 
         $longitudeTls = 1.39069;
-        $meteoToulouse = $weatherService->getToulouseWeather($longitudeTls, $latitudeTls);
+        $meteoToulouse = $weatherService->getWeather($longitudeTls, $latitudeTls);
 
             // dump($meteoo);exit;
         return $this->render('weather/index.html.twig', [
@@ -61,7 +60,7 @@ class WeatherController extends AbstractController
         // Données de Toulouse
         $latitudeTls = 43.5689; 
         $longitudeTls = 1.39069;
-        $meteoToulouse = $weatherService->getToulouseWeather($longitudeTls, $latitudeTls);
+        $meteoToulouse = $weatherService->getWeather($longitudeTls, $latitudeTls);
 
         return $this->render('weather/index.html.twig', [
             'meteo' => $meteoToulouse,

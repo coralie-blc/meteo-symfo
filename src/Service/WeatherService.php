@@ -3,8 +3,6 @@
 namespace App\Service;
 
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class WeatherService
 {
@@ -32,21 +30,5 @@ class WeatherService
 
         return $jsonData; 
     }
-
-
-    /**
-     * Service météo Toulouse
-     * @return array
-     */
-    public function getToulouseWeather($longitude, $latitude)
-    {
-        header('Content-Type: application/json'); 
-
-        $url = file_get_contents('https://api.darksky.net/forecast/' . $this->apiKey . '/' . $latitude . ',' . $longitude .'?lang=fr&units=auto'); 
-        $jsonData = (json_decode($url)); 
-
-        return $jsonData; 
-    }
-
 
 }
