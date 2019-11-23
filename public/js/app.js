@@ -21,8 +21,7 @@ $("#ville").autocomplete({
                     // Ajout dans un tableau pour éviter doublons
                     if ($.inArray(cities)) {
                         return { 
-                            // label: item.properties.city, 
-                            value: item.properties.city,
+                            value: city,
                             long: lon,
                             lat: lat,
                         };
@@ -36,11 +35,9 @@ $("#ville").autocomplete({
     // Utilisation du select de Jquery : ajout lignes 29/30 des variables nécessaires dans le tableau d'items
     // Permet de réagir au "clic" sur une ville.
     select: function(e, ui) {
-        console.log("ui", ui);
         $('.cityname').val(ui.item.value);
         $('.longitude').val(ui.item.long);
         $('.latitude').val(ui.item.lat); 
-        console.log($(".cityname").val());
     }
 });
 
