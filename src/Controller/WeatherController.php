@@ -32,7 +32,7 @@ class WeatherController extends AbstractController
         $city = $request->query->get('city-name');
 
         // appel au WeatherService et passage des données $longitude $latitude dynamiquement.
-        $cityMeteo = $weatherService->getWeather($longitude, $latitude);
+        $cityMeteo = $weatherService->getWeather($latitude, $longitude);
 
         // Puisqu'on rappelle le même template (index.html.twig), je redonne les données concernant Toulouse
         $latitudeTls = 43.5689; 
